@@ -1,0 +1,14 @@
+{% extends "base.jinja" %} 
+
+
+{% block content %}
+  <h1 class="text-center">
+    {% block title %}
+      {% if g.user %}
+        Welcome to Foundation! 
+      {% else %}
+        Welcome!  Please log in or make an account!
+      {% endif %}  
+    {% endblock %}
+  </h1>
+{% endblock  %}

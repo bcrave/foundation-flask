@@ -1,0 +1,38 @@
+{% extends "base.jinja" %} 
+
+{% block header %} 
+  <h2 class="text-lg-center">{% block title %} Log in {% endblock %}</h2>
+{% endblock %}
+
+{% block content %}
+  <div class="col-lg-9 mx-auto">
+    <form class="d-lg-none" method="post">
+      <div class="mb-3">
+        <label for="login-email" class="form-label">Username</label>
+        <input type="text" class="form-control" id="login-email" aria-describedby="emailHelp" name="username">
+        {# <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> #}
+      </div>
+      <div class="mb-3">
+        <label for="register-password" class="form-label">Password</label>
+        <input type="password" class="form-control" id="register-password" name="password">
+      </div>
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+    <div class="card d-none d-lg-block">
+      <div class="card-body">
+        <form method="post">
+          <div class="mb-3">
+            <label for="login-email--card" class="form-label">Username</label>
+            <input type="text" class="form-control" id="login-email--card" aria-describedby="emailHelp" name="username">
+            {# <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> #}
+          </div>
+          <div class="mb-3">
+            <label for="register-password--card" class="form-label">Password</label>
+            <input type="password" class="form-control" id="register-password--card" name="password">
+          </div>
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+      </div>
+    </div>
+  </div>
+{% endblock  %}
