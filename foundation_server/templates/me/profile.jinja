@@ -1,5 +1,20 @@
 {% extends "base.jinja" %}
-
+{% block title %}Profile - Foundation{% endblock %}
 {% block content %}
-  <h1 class="text-center">It me!</h1>
-{% endblock %}
+  {# <h1 class="text-center">It me, {{ g.user["username"] }}!</h1> #}
+  <div class="card">
+  {# <img src="https://via.placeholder.com/150" class="card-img-top" alt="..."> #}
+  <div class="card-body">
+    <h5 class="card-title">{{ g.user["email"] }}</h5>
+    <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, odio ac dignissim elementum, nisi magna pulvinar arcu, a rhoncus dolor nunc sit amet mauris.</p>
+    {# <a href="#" class="btn btn-primary">View Profile</a> #}
+  </div>
+  <ul class="list-group list-group-flush">
+    <li class="list-group-item">Email: johndoe@example.com</li>
+    <li class="list-group-item">Phone: +1 555-555-5555</li>
+    <li class="list-group-item">Address: 123 Main St, Anytown, USA</li>
+  </ul>
+</div>
+
+
+{% endblock %}  

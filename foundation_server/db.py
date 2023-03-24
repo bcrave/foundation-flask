@@ -1,6 +1,8 @@
 import sqlite3
 import click
+from foundation_server.seed_data import users
 from flask import current_app, g
+from werkzeug.security import generate_password_hash
 
 
 def get_db():
@@ -26,9 +28,29 @@ def init_db():
         db.executescript(f.read().decode("utf-8"))
 
 
+def seed_data():
+    db = get_db()
+    for user in users:
+        db.execute(
+            "INSERT INTO user (first_name, last_name, email, password, phone)"
+            " VALUES (?, ?, ?, ?, ?)",
+            (
+                user["first_name"],
+                user["last_name"],
+                user["email"],
+                generate_password_hash(user["password"]),
+                user["phone"],
+            ),
+        )
+        db.commit()
+
+
 @click.command("init-db")
 def init_db_command():
+    click.echo("Creating tables...")
     init_db()
+    click.echo("Seeding data...")
+    seed_data()
     click.echo("Initialized the database")
 
 

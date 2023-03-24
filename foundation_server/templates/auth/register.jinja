@@ -6,33 +6,66 @@
 
 {% block content %}
   <div class="col-lg-9 mx-auto">
+
     <form class="d-lg-none" method="post">
       <div class="mb-3">
-        <label for="register-username" class="form-label">Username</label>
-        <input type="text" class="form-control" id="register-username" aria-describedby="emailHelp" name="username">
-        {# <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> #}
+        <label for="register-first_name" class="form-label">First Name</label>
+        <input type="text" class="form-control" id="register-first_name" aria-describedby="firstNameHelp" name="first_name" required>
+      </div>
+      <div class="mb-3">
+        <label for="register-last_name" class="form-label">Last Name</label>
+        <input type="text" class="form-control" id="register-last_name" aria-describedby="lastNameHelp" name="last_name" required>
+      </div>
+      <div class="mb-3">
+        <label for="register-email" class="form-label">Email</label>
+        <input type="email" class="form-control" id="register-email" aria-describedby="emailHelp" name="email" required>
+        <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
       </div>
       <div class="mb-3">
         <label for="register-password" class="form-label">Password</label>
-        <input type="password" class="form-control" id="register-password" name="password">
+        <input type="password" class="form-control" id="register-password" name="password" required>
+      </div>
+      <div class="mb-3">
+        <label for="register-phone" class="form-label">Phone</label>
+        <input type="tel" class="form-control" id="register-phone" name="phone">
       </div>
       <button type="submit" class="btn btn-primary">Submit</button>
     </form>
+    
     <div class="card d-none d-lg-block">
       <div class="card-body">
         <form method="post">
-          <div class="mb-3">
-            <label for="register-username--card" class="form-label">Username</label>
-            <input type="text" class="form-control" id="register-username--card" aria-describedby="emailHelp" name="username">
-            {# <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> #}
+          <div class="row">
+            <div class="mb-3 col">
+              <label for="register-first_name" class="form-label">First Name</label>
+              <input type="text" class="form-control" id="register-first_name" aria-describedby="firstNameHelp" name="first_name" required>
+            </div>
+            <div class="mb-3 col">
+              <label for="register-last_name" class="form-label">Last Name</label>
+              <input type="text" class="form-control" id="register-last_name" aria-describedby="lastNameHelp" name="last_name" required>
+            </div>
           </div>
-          <div class="mb-3">
-            <label for="register-password--card" class="form-label">Password</label>
-            <input type="password" class="form-control" id="register-password--card" name="password">
+          <div class="row">
+            <div class="mb-3 col">
+              <label for="register-email" class="form-label">Email</label>
+              <input type="email" class="form-control" id="register-email" aria-describedby="emailHelp" name="email" required>
+              <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+            </div>
+            <div class="mb-3 col">
+              <label for="register-password" class="form-label">Password</label>
+              <input type="password" class="form-control" id="register-password" aria-secribedby="passwordHelp" name="password" required>
+            </div>
+          </div>
+          <div class="row">
+            <div class="mb-3 col">
+              <label for="register-phone" class="form-label">Phone (Optional)</label>
+              <input type="tel" class="form-control" id="register-phone" name="phone">
+            </div>
           </div>
           <button type="submit" class="btn btn-primary">Submit</button>
         </form>
       </div>
     </div>
+    
   </div>
 {% endblock  %}

@@ -18,20 +18,20 @@ bp = Blueprint("auth", __name__, url_prefix="/auth")
 @bp.route("/register", methods=("GET", "POST"))
 def register():
     if request.method == "POST":
-        username = request.form["username"]
+        email = request.form["email"]
         password = request.form["password"]
         error = None
 
-        if username is None:
-            error = "Username is required"
+        if email is None:
+            error = "Email is required"
         elif password is None:
             error = "Password is required"
 
         if error is None:
             db = get_db()
             db.execute(
-                "INSERT INTO user (username, password) VALUES (?, ?)",
-                (username, generate_password_hash(password)),
+                "INSERT INTO user (email, password) VALUES (?, ?)",
+                (email, generate_password_hash(password)),
             )
             db.commit()
 
@@ -45,17 +45,15 @@ def register():
 @bp.route("/login", methods=("GET", "POST"))
 def login():
     if request.method == "POST":
-        username = request.form["username"]
+        email = request.form["email"]
         password = request.form["password"]
         error = None
         db = get_db()
 
-        user = db.execute(
-            "SELECT * FROM user WHERE username = ?", (username,)
-        ).fetchone()
+        user = db.execute("SELECT * FROM user WHERE email = ?", (email,)).fetchone()
 
         if user is None:
-            error = "Incorrect username"
+            error = "Incorrect email"
         elif not check_password_hash(user["password"], password):
             error = "Incorrect password"
 
@@ -63,6 +61,8 @@ def login():
             session.clear()
             session["user_id"] = user["id"]
             return redirect(url_for("index"))
+
+        flash(error)
 
     return render_template("auth/login.jinja")
 
