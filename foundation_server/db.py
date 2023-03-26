@@ -1,6 +1,6 @@
 import sqlite3
 import click
-from foundation_server.seed_data import users
+from foundation_server.seed_data import users, teams
 from flask import current_app, g
 from werkzeug.security import generate_password_hash
 
@@ -32,17 +32,26 @@ def seed_data():
     db = get_db()
     for user in users:
         db.execute(
-            "INSERT INTO user (first_name, last_name, email, password, phone)"
-            " VALUES (?, ?, ?, ?, ?)",
+            "INSERT INTO user (first_name, last_name, email, team_id, password, phone)"
+            " VALUES (?, ?, ?, ?, ?, ?)",
             (
                 user["first_name"],
                 user["last_name"],
                 user["email"],
+                user["team_id"],
                 generate_password_hash(user["password"]),
                 user["phone"],
             ),
         )
-        db.commit()
+    for team in teams:
+        db.execute(
+            "INSERT INTO team (name, admin_id)" " VALUES (?, ?)",
+            (
+                team["name"],
+                team["admin_id"],
+            ),
+        )
+    db.commit()
 
 
 @click.command("init-db")

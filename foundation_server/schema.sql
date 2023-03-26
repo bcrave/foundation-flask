@@ -8,14 +8,14 @@ CREATE TABLE IF NOT EXISTS user (
   email TEXT NOT NULL UNIQUE,
   password TEXT NOT NULL,
   phone TEXT,
-  collab_id INTEGER,
-  FOREIGN KEY (collab_id) REFERENCES team (id)
+  team_id INTEGER,
+  FOREIGN KEY (team_id) REFERENCES team (id)
 );
 
-CREATE TABLE team (
+CREATE TABLE IF NOT EXISTS team (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
-  creator_id INTEGER NOT NULL,
+  admin_id INTEGER NOT NULL,
   created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   name TEXT NOT NULL,
-  FOREIGN KEY (creator_id) REFERENCES user (id)
+  FOREIGN KEY (admin_id) REFERENCES user (id)
 );

@@ -5,6 +5,7 @@ users = [
         "email": "brendoncrave@devpipeline.com",
         "password": "123",
         "username": "bcrave",
+        "team_id": None,
         "phone": "123-456-789",
     },
     {
@@ -13,6 +14,7 @@ users = [
         "email": "lelen0@blogs.com",
         "password": "dvmHCVAg",
         "username": "lelen0",
+        "team_id": 1,
         "phone": "762-183-0436",
     },
     {
@@ -21,6 +23,7 @@ users = [
         "email": "colochan1@hhs.gov",
         "password": "JrSgJeMG3Fy",
         "username": "colochan1",
+        "team_id": 1,
         "phone": "769-212-1071",
     },
     {
@@ -29,6 +32,7 @@ users = [
         "email": "mcraigs2@army.mil",
         "password": "KTr6rQiy",
         "username": "mcraigs2",
+        "team_id": 1,
         "phone": "142-515-2992",
     },
     {
@@ -37,6 +41,7 @@ users = [
         "email": "lsaldler3@ovh.net",
         "password": "3gQ5QsQgt1t",
         "username": "lsaldler3",
+        "team_id": 1,
         "phone": "604-721-1905",
     },
     {
@@ -45,6 +50,7 @@ users = [
         "email": "rabrehart4@live.com",
         "password": "By5t3Tb7",
         "username": "rabrehart4",
+        "team_id": 1,
         "phone": "299-746-6463",
     },
     {
@@ -53,6 +59,7 @@ users = [
         "email": "cklewi5@instagram.com",
         "password": "mLc1uA",
         "username": "cklewi5",
+        "team_id": 2,
         "phone": "916-592-6492",
     },
     {
@@ -61,6 +68,7 @@ users = [
         "email": "skernar6@example.com",
         "password": "KCkdrSy8u",
         "username": "skernar6",
+        "team_id": 2,
         "phone": "144-737-4623",
     },
     {
@@ -69,6 +77,7 @@ users = [
         "email": "jplaid7@ox.ac.uk",
         "password": "u5VRdUg",
         "username": "jplaid7",
+        "team_id": 2,
         "phone": "181-339-3202",
     },
     {
@@ -77,6 +86,7 @@ users = [
         "email": "clefloch8@smh.com.au",
         "password": "m9uYY8",
         "username": "clefloch8",
+        "team_id": 2,
         "phone": "938-720-4412",
     },
     {
@@ -85,6 +95,7 @@ users = [
         "email": "meyre9@nyu.edu",
         "password": "gjQvPOY",
         "username": "meyre9",
+        "team_id": 2,
         "phone": "331-236-1766",
     },
     {
@@ -93,6 +104,7 @@ users = [
         "email": "amaharga@wired.com",
         "password": "mXg56MAwZ",
         "username": "amaharga",
+        "team_id": 3,
         "phone": "453-511-1301",
     },
     {
@@ -101,6 +113,7 @@ users = [
         "email": "rglandonb@bbc.co.uk",
         "password": "PKjZ2Vt6eS",
         "username": "rglandonb",
+        "team_id": 3,
         "phone": "807-590-5675",
     },
     {
@@ -109,6 +122,7 @@ users = [
         "email": "dhirthc@spotify.com",
         "password": "Pt2TulN7Et",
         "username": "dhirthc",
+        "team_id": 3,
         "phone": "215-935-1340",
     },
     {
@@ -117,6 +131,7 @@ users = [
         "email": "svasilkovd@technorati.com",
         "password": "IGrD5filOPI",
         "username": "svasilkovd",
+        "team_id": 3,
         "phone": "573-708-5629",
     },
     {
@@ -125,6 +140,12 @@ users = [
         "email": "babbisone@soundcloud.com",
         "password": "rMOPjiHE6",
         "username": "babbisone",
+        "team_id": 3,
         "phone": "467-885-4490",
     },
+]
+teams = [
+    {"name": "Keeling, Ruecker and Kulas", "admin_id": 1},
+    {"name": "Schumm, Metz and Dooley", "admin_id": 1},
+    {"name": "Mraz and Sons", "admin_id": 1},
 ]
