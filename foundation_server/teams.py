@@ -1,5 +1,16 @@
-from flask import Blueprint, session, render_template, redirect, url_for, abort
+from flask import (
+    Blueprint,
+    session,
+    render_template,
+    redirect,
+    url_for,
+    abort,
+    g,
+    request,
+    flash,
+)
 from foundation_server.db import get_db
+from foundation_server.auth import login_required
 
 bp = Blueprint("teams", __name__, url_prefix="/teams")
 
@@ -29,13 +40,13 @@ def index():
     if user_id is not None:
         db = get_db()
         teams = db.execute(
-            "SELECT t.id, t.name, created, admin_id, u.first_name, u.last_name"
+            "SELECT t.id, t.name, created, admin_id, u.first_name, u.last_name, email"
             " FROM team t JOIN user u ON t.admin_id = u.id"
-            " ORDER BY created DESC"
+            " WHERE t.admin_id = ?"
+            " OR t.id = ?"
+            " ORDER BY created DESC",
+            (g.user["id"], g.user["team_id"]),
         ).fetchall()
-
-        for team in teams:
-            print(team.keys())
 
         return render_template("teams/index.jinja", teams=teams)
 
@@ -57,3 +68,33 @@ def team(id):
     )
 
     return render_template("teams/team.jinja", team=team, team_members=team_members)
+
+
+@bp.route("/<int:id>/update", methods=("POST",))
+@login_required
+def update(id):
+    name = request.form["team_name"]
+    email = request.form["admin_email"]
+    error = None
+    db = get_db()
+    new_admin = db.execute("SELECT * FROM user WHERE email = ?", (email,)).fetchone()
+
+    if not name:
+        error = "Name is required"
+    elif new_admin is None:
+        error = "A user with this email does not exist."
+
+    if error is not None:
+        flash(error)
+    else:
+        db.execute(
+            "UPDATE team SET name = ?, admin_id = ?" " WHERE id = ?",
+            (
+                name,
+                new_admin["id"],
+                id,
+            ),
+        )
+        db.commit()
+
+        return redirect(url_for("teams.index"))

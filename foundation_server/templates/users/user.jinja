@@ -1,1 +1,9 @@
 {% extends "base.jinja" %}
+
+{% block title %}
+  {{ user.first_name }}
+{% endblock  %}
+
+{% block content %}
+  <h1 class="text-lg-center">{{ user.first_name }} {{ user.last_name }}</h1>
+{% endblock  %}
