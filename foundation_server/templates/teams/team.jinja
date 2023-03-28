@@ -25,7 +25,11 @@
               </a>
             </td>
             <td>
-              User
+              {% if team.owner_id == team_member.id %}
+                Super
+              {% else %}
+                User
+              {% endif %}
             </td>
           </tr>
         {% endfor %}

@@ -17,9 +17,11 @@ def index():
     users = (
         get_db()
         .execute(
-            "SELECT u.id, first_name, last_name, team_id, t.name AS team_name"
-            " FROM user u JOIN team t ON u.team_id = t.id"
-            " WHERE u.team_id = t.id"
+            "SELECT u.id, u.first_name, u.last_name, t.id AS team_id, t.name AS team_name FROM user_team ut"
+            " JOIN team t ON ut.team_id = t.id"
+            " JOIN user u ON ut.user_id = u.id"
+            " WHERE t.owner_id = ?",
+            (g.user["id"],),
         )
         .fetchall()
     )

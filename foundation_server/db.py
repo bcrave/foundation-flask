@@ -30,27 +30,38 @@ def init_db():
 
 def seed_data():
     db = get_db()
+
+    user_id = 1
     for user in users:
         db.execute(
-            "INSERT INTO user (first_name, last_name, email, team_id, password, phone)"
-            " VALUES (?, ?, ?, ?, ?, ?)",
+            "INSERT INTO user (first_name, last_name, email, password, phone)"
+            " VALUES (?, ?, ?, ?, ?)",
             (
                 user["first_name"],
                 user["last_name"],
                 user["email"],
-                user["team_id"],
                 generate_password_hash(user["password"]),
                 user["phone"],
             ),
         )
+
+        for team_id in user["collabs"]:
+            db.execute(
+                "INSERT INTO user_team (user_id, team_id) VALUES (?, ?)",
+                (user_id, team_id),
+            )
+
+        user_id += 1
+
     for team in teams:
         db.execute(
-            "INSERT INTO team (name, admin_id)" " VALUES (?, ?)",
+            "INSERT INTO team (name, owner_id)" " VALUES (?, ?)",
             (
                 team["name"],
-                team["admin_id"],
+                team["owner_id"],
             ),
         )
+
     db.commit()
 
 

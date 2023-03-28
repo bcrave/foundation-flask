@@ -15,34 +15,34 @@
           <tr>
             <th scope="col">#</th>
             <th scope="col">Team Name</th>
-            <th scope="col">Admin</th>
+            <th scope="col">Owner</th>
           </tr>
         </thead>
         <tbody>
           {% for team in teams %}
-            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal fade" id="{{ team.id }}" tabindex="-1" aria-labelledby="{{ team.name }}ModalLabel" aria-hidden="true">
               <div class="modal-dialog">
                 <div class="modal-content">
                   <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                    <h1 class="modal-title fs-5" id="{{ team.name }}ModalLabel">Modal title</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                   </div>
                   <div class="modal-body">
-                  <form id="form__team-update" action="{{ url_for('teams.update', id=team.id) }}" method="post">
+                  <form id="form__{{ team.name }}-update" action="{{ url_for('teams.update', id=team.id) }}" method="post">
                     <div class="mb-3">
                       <label for="update-name" class="form-label">Team Name</label>
-                      <input type="text" class="form-control" id="update-name" aria-describedby="teamNameHelp" name="team_name" value="{{ team.name }}">
+                      <input type="text" class="form-control" id="update-name" aria-describedby="teamNameHelp" name="team_name" value="{{ team.name }}" required>
                     </div>
                     <div class="mb-3">
-                      <label for="update-admin" class="form-label">Admin Email</label>
-                      <input type="text" class="form-control" id="update-admin" aria-describedby="adminEmailHelp" name="admin_email" value="{{ team.email }}">
-                      <div id="adminEmailHelp" class="form-text">The current admin is {{ team.first_name }} {{ team.last_name }}.</div>
+                      <label for="update-owner" class="form-label">Owner Email</label>
+                      <input type="text" class="form-control" id="update-owner" aria-describedby="ownerEmailHelp" name="owner_email" value="{{ team.email }}" required>
+                      <div id="ownerEmailHelp" class="form-text">The current owner is {{ team.first_name }} {{ team.last_name }}.</div>
                     </div>
                   </form>
                   </div>
                   <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary" form="form__team-update">Save changes</button>
+                    <button type="submit" class="btn btn-primary" form="form__{{ team.name }}-update">Save changes</button>
                   </div>
                 </div>
               </div>
@@ -53,12 +53,12 @@
                 <a href="{{ url_for('teams.team', id=team.id) }}">{{ team.name }}</a>
               </td>
               <td class="align-middle">
-                <a href="{{ url_for('users.user', id=team.admin_id) }}">
+                <a href="{{ url_for('users.user', id=team.owner_id) }}">
                   {{ team.first_name}} {{ team.last_name }}
                 </a>
               </td>
               <td>
-                <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Edit</button>
+                <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#{{ team.id }}">Edit</button>
               </td>
             </tr>
           {% endfor %}

@@ -21,7 +21,9 @@
               <tr>
                 <th scope="row">{{ user.id }}</th>
                 <td>
-                  <a href="{{ url_for('users.user', id=user.id) }}">{{ user.first_name }} {{ user.last_name }}</a>
+                  <a href="{{ url_for('users.user', id=user.id) }}">
+                    {{ user.first_name }} {{ user.last_name }}
+                  </a>
                 </td>
                 <td>
                   <a href="{{ url_for('teams.team', id=user.team_id) }}">

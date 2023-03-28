@@ -1,5 +1,6 @@
 DROP TABLE IF EXISTS user;
 DROP TABLE IF EXISTS team;
+DROP TABLE IF EXISTS user_team;
 
 CREATE TABLE IF NOT EXISTS user (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -7,15 +8,21 @@ CREATE TABLE IF NOT EXISTS user (
   last_name TEXT NOT NULL,
   email TEXT NOT NULL UNIQUE,
   password TEXT NOT NULL,
-  phone TEXT,
-  team_id INTEGER,
-  FOREIGN KEY (team_id) REFERENCES team (id)
+  phone TEXT
 );
 
 CREATE TABLE IF NOT EXISTS team (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
-  admin_id INTEGER NOT NULL,
+  owner_id INTEGER NOT NULL,
   created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   name TEXT NOT NULL,
-  FOREIGN KEY (admin_id) REFERENCES user (id)
+  FOREIGN KEY (owner_id) REFERENCES user (id)
+);
+
+CREATE TABLE IF NOT EXISTS user_team (
+  user_id INTEGER,
+  team_id INTEGER,
+  PRIMARY KEY (user_id, team_id),
+  FOREIGN KEY (user_id) REFERENCES user (id),
+  FOREIGN KEY (team_id) REFERENCES team (id)
 );
