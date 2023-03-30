@@ -5,8 +5,8 @@
 {% endblock  %}
 
 {% block content %}
-  <h1 class="text-lg-center">{{ user.first_name }} {{ user.last_name }}</h1>
-  <div class="card">
+  <h1 class="text-lg-center mb-5">{{ user.first_name }} {{ user.last_name }}</h1>
+  <div class="card col-lg-9 mx-auto">
     <div class="card-body">
       <h5 class="card-title">{{ user["username"] }}</h5>
       <p class="card-text">Hi!  My name is {{ user["first_name"] }} {{ user["last_name"] }}</p>
@@ -14,6 +14,20 @@
     <ul class="list-group list-group-flush">
       <li class="list-group-item">Email: {{ user["email"] }}</li>
       <li class="list-group-item">Phone: {{ user["phone"] }}</li>
+      <li class="list-group-item">
+        Team(s):
+        {% set team_names = user.team_names.split(",, ") %}
+        {% set team_ids = user.team_ids.split(",, ") %}
+        {% for team_name in team_names %}
+          <a href="{{ url_for('teams.team', id=team_ids[loop.index - 1]) }}">
+            {{ team_name }}
+          </a>
+          {% if not loop.last %}
+          ,
+          {% endif %}
+        {% endfor %}
+      </li>
+
     </ul>
   </div>
 {% endblock  %}

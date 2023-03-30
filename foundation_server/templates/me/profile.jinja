@@ -1,8 +1,8 @@
 {% extends "base.jinja" %}
 {% block title %}Profile - Foundation{% endblock %}
 {% block content %}
-  {# <h1 class="text-center">It me, {{ g.user["username"] }}!</h1> #}
-  <div class="card">
+  <h1 class="text-center mb-5">{{ g.user["first_name"] }} {{ g.user["last_name"] }}</h1>
+  <div class="card col-lg-9 mx-auto">
     {# <img src="https://via.placeholder.com/150" class="card-img-top" alt="..."> #}
     <div class="card-body">
       <h5 class="card-title">{{ g.user["username"] }}</h5>
@@ -12,6 +12,17 @@
     <ul class="list-group list-group-flush">
       <li class="list-group-item">Email: {{ g.user["email"] }}</li>
       <li class="list-group-item">Phone: {{ g.user["phone"] }}</li>
+      <li class="list-group-item">
+        Team(s):
+        {% for team in teams %}
+          <a href="{{ url_for('teams.team', id=team.team_id) }}">
+            {{ team.team_name }}
+          </a>
+          {% if not loop.last %}
+          ,
+          {% endif %}
+        {% endfor %}
+      </li>
     </ul>
   </div>
 {% endblock %}  

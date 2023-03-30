@@ -7,7 +7,21 @@ bp = Blueprint("users", __name__, url_prefix="/users")
 
 
 def get_user(id):
-    user = get_db().execute("SELECT * FROM user WHERE id = ?", (id,)).fetchone()
+    user = (
+        get_db()
+        .execute(
+            "SELECT u.id, u.first_name, u.last_name, u.username, u.email, u.phone,"
+            " GROUP_CONCAT(t.id, ',, ') AS team_ids,"
+            " GROUP_CONCAT(t.name, ',, ') AS team_names"
+            " FROM user_team ut"
+            " JOIN team t ON ut.team_id = t.id"
+            " JOIN user u ON ut.user_id = u.id"
+            " WHERE u.id = ?"
+            " GROUP BY u.id",
+            (id,),
+        )
+        .fetchone()
+    )
     if user is None:
         abort(404, f"User id {id} does not exist.")
 

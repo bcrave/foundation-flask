@@ -5,14 +5,15 @@
 {% endblock  %}
 
 {% block content %}
-  <h1 class="text-lg-center">
-    {% if query["term"] == "" %}
-      Search
-    {% else %}
-      You searched for: 
-      {{ query["term"] }}
-    {% endif %}
-  </h1>
+  {% if query["term"] == "" %}
+    {% set search_value = "Search" %}
+  {% else %}
+    {% set search_value = query["term"]%}
+  {% endif %}
+  <form class="d-flex col-lg-9 mx-auto" role="search" action="{{ url_for('search.index') }}" method="get">
+    <input class="form-control form-control-lg me-2" type="search" placeholder="Search" aria-label="Search" name="term" value="{{ search_value }}">
+    <button class="btn btn-outline-success" type="submit">Search</button>
+  </form>
   <div class="col-lg-9 mx-auto mt-5">
     {% for result in results %}
       <div class="card mb-3">
@@ -27,6 +28,20 @@
         <ul class="list-group list-group-flush">
           <li class="list-group-item">Email: {{ result["email"] }}</li>
           <li class="list-group-item">Phone: {{ result["phone"] }}</li>
+          <li class="list-group-item">
+            Team(s): 
+            {% set team_names = result.team_names.split(",, ") %}
+            {% set team_ids = result.team_ids.split(",, ") %}
+            {% for team_name in team_names %}
+              <a href="{{ url_for('teams.team', id=team_ids[loop.index - 1]) }}">
+                {{ team_name }}
+              </a>
+              {% if not loop.last %}
+              ,
+              {% endif %}
+            {% endfor %}
+          </li>
+
         </ul>
       </div>
     {% endfor %}
