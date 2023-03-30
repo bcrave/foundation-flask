@@ -25,6 +25,11 @@
             <a class="nav-link" href="{{ url_for('users.index') }}">Users</a>
           </li>
         </ul>
+        <a class="navbar-brand" href="{{ url_for('me.index') }}">
+          <h5>
+            {{ g.user["username"] }}
+          </h5>
+        </a>
         <ul class="navbar-nav ms-auto me-5 mb-5 mb-lg-0">
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -51,8 +56,8 @@
           </ul>
         {% endif %}
         {% if g.user %}
-          <form class="d-flex" role="search">
-            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+          <form class="d-flex" role="search" action="{{ url_for('search.index') }}" method="get">
+            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="term">
             <button class="btn btn-outline-success" type="submit">Search</button>
           </form>
         {% endif %}

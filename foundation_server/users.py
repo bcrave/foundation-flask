@@ -1,3 +1,5 @@
+from pprint import pprint
+
 from flask import Blueprint, abort, render_template, redirect, url_for, g
 from foundation_server.db import get_db
 
@@ -17,14 +19,19 @@ def index():
     users = (
         get_db()
         .execute(
-            "SELECT u.id, u.first_name, u.last_name, t.id AS team_id, t.name AS team_name FROM user_team ut"
+            "SELECT u.id, u.first_name, u.last_name,"
+            " GROUP_CONCAT(t.id, ',, ') AS team_ids,"
+            " GROUP_CONCAT(t.name, ',, ') AS team_names"
+            " FROM user_team ut"
             " JOIN team t ON ut.team_id = t.id"
             " JOIN user u ON ut.user_id = u.id"
-            " WHERE t.owner_id = ?",
+            " WHERE t.owner_id = ?"
+            " GROUP BY u.id",
             (g.user["id"],),
         )
         .fetchall()
     )
+
     return render_template("users/index.jinja", users=users)
 
 

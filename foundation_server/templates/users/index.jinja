@@ -12,7 +12,7 @@
           <tr>
             <th scope="col">#</th>
             <th scope="col">Name</th>
-            <th scope="col">Team Name</th>
+            <th scope="col">Teams</th>
           </tr>
         </thead>
         <tbody>
@@ -26,9 +26,16 @@
                   </a>
                 </td>
                 <td>
-                  <a href="{{ url_for('teams.team', id=user.team_id) }}">
-                    {{ user.team_name}}
-                  </a>
+                  {% set team_names = user.team_names.split(",, ") %}
+                  {% set team_ids = user.team_ids.split(",, ") %}
+                  {% for team_name in team_names %}
+                    <a href="{{ url_for('teams.team', id=team_ids[loop.index - 1]) }}">
+                      {{ team_name }}
+                    </a>
+                    {% if not loop.last %}
+                    ,
+                    {% endif %}
+                  {% endfor %}
                 </td>
               </tr>
             {% endif %}

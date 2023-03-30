@@ -6,4 +6,14 @@
 
 {% block content %}
   <h1 class="text-lg-center">{{ user.first_name }} {{ user.last_name }}</h1>
+  <div class="card">
+    <div class="card-body">
+      <h5 class="card-title">{{ user["username"] }}</h5>
+      <p class="card-text">Hi!  My name is {{ user["first_name"] }} {{ user["last_name"] }}</p>
+    </div>
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item">Email: {{ user["email"] }}</li>
+      <li class="list-group-item">Phone: {{ user["phone"] }}</li>
+    </ul>
+  </div>
 {% endblock  %}

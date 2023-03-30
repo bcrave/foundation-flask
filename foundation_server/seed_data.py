@@ -137,9 +137,9 @@ users = [
     {
         "first_name": "Brandon",
         "last_name": "Graves",
-        "email": "bgraves@soundcloud.com",
+        "email": "brandongraves@gmail.com",
         "password": "1312",
-        "username": "babbisone",
+        "username": "D4rkBrandon",
         "collabs": [16, 8, 15, 1],
         "phone": "467-885-4490",
     },

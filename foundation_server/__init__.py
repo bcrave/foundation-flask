@@ -19,7 +19,7 @@ def create_app(test_config=None):
     except OSError:
         pass
 
-    from . import db, auth, home, me, teams, users
+    from . import db, auth, home, me, teams, users, search
 
     db.init_app(app)
     app.register_blueprint(auth.bp)
@@ -27,6 +27,7 @@ def create_app(test_config=None):
     app.register_blueprint(me.bp)
     app.register_blueprint(teams.bp)
     app.register_blueprint(users.bp)
+    app.register_blueprint(search.bp)
     app.add_url_rule("/", endpoint="index")
 
     return app

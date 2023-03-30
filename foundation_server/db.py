@@ -22,10 +22,14 @@ def close_db(e=None):
         db.close()
 
 
-def init_db():
+def init_db(index=False):
     db = get_db()
-    with current_app.open_resource("schema.sql") as f:
-        db.executescript(f.read().decode("utf-8"))
+    if not index:
+        with current_app.open_resource("schema.sql") as f:
+            db.executescript(f.read().decode("utf-8"))
+    else:
+        with current_app.open_resource("index.sql") as f:
+            db.executescript(f.read().decode("utf-8"))
 
 
 def seed_data():
@@ -34,12 +38,13 @@ def seed_data():
     user_id = 1
     for user in users:
         db.execute(
-            "INSERT INTO user (first_name, last_name, email, password, phone)"
-            " VALUES (?, ?, ?, ?, ?)",
+            "INSERT INTO user (first_name, last_name, email, username, password, phone)"
+            " VALUES (?, ?, ?, ?, ?, ?)",
             (
                 user["first_name"],
                 user["last_name"],
                 user["email"],
+                user["username"],
                 generate_password_hash(user["password"]),
                 user["phone"],
             ),
@@ -69,8 +74,13 @@ def seed_data():
 def init_db_command():
     click.echo("Creating tables...")
     init_db()
+
     click.echo("Seeding data...")
     seed_data()
+
+    click.echo("Indexing database...")
+    init_db(index=True)
+
     click.echo("Initialized the database")
 
 
