@@ -18,10 +18,16 @@
         Team(s):
         {% set team_names = user.team_names.split(",, ") %}
         {% set team_ids = user.team_ids.split(",, ") %}
+        {% set owner_ids = user.owner_ids.split(",, ") %}
         {% for team_name in team_names %}
-          <a href="{{ url_for('teams.team', id=team_ids[loop.index - 1]) }}">
+          {% set team_id = team_ids[loop.index - 1] | int %}
+          {% set owner_id = owner_ids[loop.index - 1] | int%}
+          <a href="{{ url_for('teams.team', id=team_id) }}">
             {{ team_name }}
           </a>
+          {% if owner_id == user.id %}
+            (Owner)
+          {% endif %}
           {% if not loop.last %}
           ,
           {% endif %}

@@ -18,6 +18,9 @@
           <a href="{{ url_for('teams.team', id=team.team_id) }}">
             {{ team.team_name }}
           </a>
+          {% if team.owner_id == g.user["id"] %}
+            (Owner)
+          {% endif %}
           {% if not loop.last %}
           ,
           {% endif %}

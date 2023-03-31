@@ -12,7 +12,8 @@ def get_user(id):
         .execute(
             "SELECT u.id, u.first_name, u.last_name, u.username, u.email, u.phone,"
             " GROUP_CONCAT(t.id, ',, ') AS team_ids,"
-            " GROUP_CONCAT(t.name, ',, ') AS team_names"
+            " GROUP_CONCAT(t.name, ',, ') AS team_names,"
+            " GROUP_CONCAT(t.owner_id, ',, ') AS owner_ids"
             " FROM user_team ut"
             " JOIN team t ON ut.team_id = t.id"
             " JOIN user u ON ut.user_id = u.id"

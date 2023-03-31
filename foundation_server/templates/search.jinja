@@ -6,7 +6,7 @@
 
 {% block content %}
   {% if query["term"] == "" %}
-    {% set search_value = "Search" %}
+    {% set search_value = "" %}
   {% else %}
     {% set search_value = query["term"]%}
   {% endif %}
@@ -16,14 +16,12 @@
   </form>
   <div class="col-lg-9 mx-auto mt-5">
     {% for result in results %}
-      <div class="card mb-3">
-        {# <img src="https://via.placeholder.com/150" class="card-img-top" alt="..."> #}
+      <div class="card mb-3 result-card" id="result-card-{{ result.user_id }}">
         <div class="card-body">
           <a href="{{ url_for('users.user', id=result['user_id']) }}">
             <h5 class="card-title">{{ result["first_name"] }} {{ result["last_name"] }}</h5>
           </a>
           <p class="card-text">{{ result["username"] }}</p>
-          {# <a href="#" class="btn btn-primary">View Profile</a> #}
         </div>
         <ul class="list-group list-group-flush">
           <li class="list-group-item">Email: {{ result["email"] }}</li>
@@ -32,10 +30,16 @@
             Team(s): 
             {% set team_names = result.team_names.split(",, ") %}
             {% set team_ids = result.team_ids.split(",, ") %}
+            {% set owner_ids = result.owner_ids.split(",, ") %}
             {% for team_name in team_names %}
-              <a href="{{ url_for('teams.team', id=team_ids[loop.index - 1]) }}">
+              {% set team_id = team_ids[loop.index - 1] | int %}
+              {% set owner_id = owner_ids[loop.index - 1] | int %}
+              <a href="{{ url_for('teams.team', id=team_id) }}">
                 {{ team_name }}
               </a>
+              {% if owner_id == result.user_id %}
+                (Owner)
+              {% endif %}
               {% if not loop.last %}
               ,
               {% endif %}
@@ -47,3 +51,7 @@
     {% endfor %}
   </div>
 {% endblock %}
+
+{% block javascript %}
+  <script type="text/javascript" src="{{ url_for('static', filename='highlightSearch.js') }}"></script>
+{% endblock  %}

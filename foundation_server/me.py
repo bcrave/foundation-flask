@@ -9,7 +9,7 @@ def index():
     teams = (
         get_db()
         .execute(
-            "SELECT t.id AS team_id, t.name AS team_name"
+            "SELECT t.id AS team_id, t.owner_id, t.name AS team_name"
             " FROM user_team ut"
             " JOIN team t ON t.id = ut.team_id"
             " JOIN user u ON u.id = ut.user_id"

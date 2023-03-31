@@ -54,6 +54,27 @@ def index():
     return redirect(url_for("auth.login"))
 
 
+@bp.route("/add", methods=("POST",))
+def add():
+    db = get_db()
+    cursor = db.cursor()
+    team_name = request.form["team_name"]
+    user_id = g.user["id"]
+    cursor.execute(
+        "INSERT INTO team (name, owner_id) VALUES (?, ?)",
+        (
+            team_name,
+            user_id,
+        ),
+    )
+    team_id = cursor.lastrowid
+    cursor.execute(
+        "INSERT INTO user_team (user_id, team_id) VALUES (?, ?)", (user_id, team_id)
+    )
+    db.commit()
+    return redirect(url_for(("teams.index")))
+
+
 @bp.route("/<int:id>", methods=("GET",))
 def team(id):
     team = get_team(id)
