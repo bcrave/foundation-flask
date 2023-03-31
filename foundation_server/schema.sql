@@ -23,6 +23,7 @@ CREATE TABLE IF NOT EXISTS team (
 CREATE TABLE IF NOT EXISTS user_team (
   user_id INTEGER,
   team_id INTEGER,
+  user_role TEXT NOT NULL DEFAULT "user",
   PRIMARY KEY (user_id, team_id),
   FOREIGN KEY (user_id) REFERENCES user (id),
   FOREIGN KEY (team_id) REFERENCES team (id)

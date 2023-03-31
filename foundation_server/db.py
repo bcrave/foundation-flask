@@ -51,9 +51,11 @@ def seed_data():
         )
 
         for team_id in user["collabs"]:
+            owner_id = db.execute("SELECT owner_id FROM team WHERE id = ?", (team_id,))
+            role = "super" if user_id == owner_id else "user"
             db.execute(
-                "INSERT INTO user_team (user_id, team_id) VALUES (?, ?)",
-                (user_id, team_id),
+                "INSERT INTO user_team (user_id, team_id, user_role) VALUES (?, ?, ?)",
+                (user_id, team_id, role),
             )
 
         user_id += 1

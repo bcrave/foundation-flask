@@ -27,11 +27,11 @@
               <label for="add-name" class="form-label">Team Name</label>
               <input type="text" class="form-control" id="add-name" aria-describedby="teamNameHelp" name="team_name" placeholder="Foundation" required>
             </div>
-            {# <div class="mb-3">
-              <label for="add-owner" class="form-label">Owner Email</label>
-              <input type="text" class="form-control" id="add-owner" aria-describedby="ownerEmailHelp" name="owner_email" value="{{ team.email }}" required>
-              <div id="ownerEmailHelp" class="form-text">The current owner is {{ team.first_name }} {{ team.last_name }}.</div>
-            </div> #}
+            <div class="mb-3">
+              <label for="add-users" class="form-label">Users by Email (comma separated)</label>
+              <input type="text" class="form-control" id="add-users" aria-describedby="userEmailHelp" name="user_emails" placeholder="johndoe@gmail.com, janedoe@gmail.com" required>
+              <div id="userEmailHelp" class="form-text"></div>
+            </div>
           </form>
 
           </div>

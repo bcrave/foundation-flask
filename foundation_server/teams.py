@@ -55,23 +55,45 @@ def index():
 
 
 @bp.route("/add", methods=("POST",))
+@login_required
 def add():
     db = get_db()
     cursor = db.cursor()
     team_name = request.form["team_name"]
-    user_id = g.user["id"]
+    user_emails = request.form["user_emails"].split(", ")
+    owner_id = g.user["id"]
+    error = None
+
     cursor.execute(
         "INSERT INTO team (name, owner_id) VALUES (?, ?)",
         (
             team_name,
-            user_id,
+            owner_id,
         ),
     )
+
+    # Add owner as super user
     team_id = cursor.lastrowid
     cursor.execute(
-        "INSERT INTO user_team (user_id, team_id) VALUES (?, ?)", (user_id, team_id)
+        "INSERT INTO user_team (user_id, team_id, user_role) VALUES (?, ?, ?)",
+        (owner_id, team_id, "super"),
     )
+
+    # Add users listed in email form input
+    for email in user_emails:
+        user_id = cursor.execute(
+            "SELECT id FROM user WHERE email = ?", (email,)
+        ).fetchone()[0]
+        cursor.execute(
+            "INSERT INTO user_team (user_id, team_id) VALUES (?, ?)",
+            (
+                user_id,
+                team_id,
+            ),
+        )
+
     db.commit()
+
     return redirect(url_for(("teams.index")))
 
 
